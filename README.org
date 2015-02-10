@@ -49,10 +49,20 @@ activate R
 'end
 deactivate R
 @enduml
-
 #+end_src
 
 #+RESULTS: R_GRASS
 [[file:R_GRASS.png]]
 
 [[./R_GRASS.png]]
+
+* TODOs
+** TODO Add GRASS -> R non spatial data
+LOGGED: <2015-02-10 Tue 18:06> 
+- link     :: [[file:~/Documents/Projects/R-GRASS-WIKI/README.org::*R-GRASS%20workflow%20chart][R-GRASS workflow chart]] 
+- author   :: Rainer M Krug, email: Rainer@krugs.de
+
+From: [[notmuch:id:CAGrkfcKkKGQpLfRLR=UoHzL4Q7WKMSkNpc16jWmfFuy539YPSw@mail.gmail.com][Email from Paulo van Breugel: Re: {GRASS-stats} Tests spgrass7 and RC2]]:
+One suggestion for extending / clarification; R can also get
+tabular (i.e., non-spatial) data from GRASS (e.g., by running r.univar and
+getting the results). TODOs
