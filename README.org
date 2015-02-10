@@ -31,7 +31,7 @@ GRASS -> R: start R within GRASS
 activate R
 
 R -> GRASS: do some stuff
-GRASS -> R: do moreg stuff
+GRASS -> R: do more stuff
 
 R -> GRASS: end R and return
 deactivate R
@@ -57,7 +57,7 @@ activate R
 R -> R: initialisation
 
 R -> GRASS: do some stuff
-GRASS -> R: do moreg stuff
+GRASS -> R: do more stuff
 
 deactivate R
 @enduml
