@@ -13,51 +13,185 @@
 #+EXCLUDE_TAGS: noexport
 #+CREATOR: Emacs 24.4.1 (Org mode 8.3beta)
 
+* How to initiate the co-operation
+Twpo approaches can be used to initiate the co-operation: either R can
+be started in GRASS, or GRASS in R.
 
-* R-GRASS workflow chart
-This chart illustrates the workflow between [[http://cran.r-project.org/][R]] and [[http://grass.osgeo.org/][GRASS]]
+** R in GRASS
+[[http://cran.r-project.org/][R]] can be started in [[http://grass.osgeo.org/][GRASS GIS]] from [[http://cran.r-project.org/][R]] is to use R as a scripting language in a similar way as bash and python can do.
+A possible workflow can look as followed:
 
-#+NAME: R_GRASS
+#+NAME: R_in_GRASS
+#+begin_src plantuml :file-ext png :results graphic
+@startuml
+skin BlueModern
+
+activate GRASS
+GRASS -> R: start R within GRASS
+activate R
+
+R -> GRASS: do some stuff
+GRASS -> R: do moreg stuff
+
+R -> GRASS: end R and return
+deactivate R
+@enduml
+#+end_src
+
+#+RESULTS: R_in_GRASS
+[[file:R_in_GRASS.png]]
+
+[[./R_in_GRASS.png]]
+
+** GRASS in R
+In contrast to running [[http://cran.r-project.org/][R]] in [[http://grass.osgeo.org/][GRASS GIS]], [[http://cran.r-project.org/][R]] can also initialize an
+internal [[http://grass.osgeo.org/][GRASS GIS]] session and communicate with this internal [[http://grass.osgeo.org/][GRASS
+GIS]] session.
+  
+#+NAME: GRASS_in_R
+#+begin_src plantuml :file-ext png :results graphic
+@startuml
+skin BlueModern
+
+activate R
+R -> R: initialisation
+
+R -> GRASS: do some stuff
+GRASS -> R: do moreg stuff
+
+deactivate R
+@enduml
+#+end_src
+
+#+RESULTS: GRASS_in_R
+[[file:GRASS_in_R.png]]
+
+[[./GRASS_in_R.png]]
+
+
+* R-GRASS interaction illustrations
+This chart illustrates the possible interactions between  [[http://cran.r-project.org/][R]] and [[http://grass.osgeo.org/][GRASS]].
+These interactions are independent of the way in which the co-operation was initiated.
+
+#+NAME: R_GRASS_interactions
 #+begin_src plantuml :file-ext png :results graphic
 @startuml
 skin BlueModern
 
 activate R
 ' R -> R: initialisation
-'' group GRASS as DB
-  R <- GRASS: read spatial data
-  R -> R: do calculations
-  R -> GRASS: write spatial data
-  [<- R: write non-spatial data
-'end
 
-'group R as script
-  R -> GRASS: request calculations
-  deactivate R
-  activate GRASS
-  GRASS -> GRASS: do calculations
-  R <- GRASS: done
-  deactivate GRASS
-  activate R
-'end
+R <- GRASS: read spatial raster data
+R <- GRASS: read spatial vector data
+R <- GRASS: read non-spatial data
 
-'group GRASS as DB
-  R <- GRASS: read spatial data
-  R -> R: do calculations
-'  R -> GRASS: write spatial data
-  [<- R: write non-spatial data
-'end
+R -> R: do spatial raster calculations
+R -> R: do spatial vector calculations
+R -> R: do non-spatial calculations
+
+R -> GRASS: request calculation
+deactivate R
+activate GRASS
+GRASS -> GRASS: do spatial calculations
+GRASS -> GRASS: do non-spatial calculations
+R <- GRASS: done
+deactivate GRASS
+activate R
+
+R -> GRASS: write spatial raster data
+R -> GRASS: write spatial vector data
+
+[<- R: write spatial raster data
+[<- R: write spatial vector data
+[<- R: write non-spatial data
+
 deactivate R
 @enduml
 #+end_src
 
-#+RESULTS: R_GRASS
-[[file:R_GRASS.png]]
+#+RESULTS: R_GRASS_interactions
+[[file:R_GRASS_interactions.png]]
 
-[[./R_GRASS.png]]
+[[./R_GRASS_interactions.png]]
+
+
+* GRASS as spatial storage backend
+In this work flow, [[http://grass.osgeo.org/][GRASS GIS]] is used as the storage backend for the
+spatial data analysed in [[http://cran.r-project.org/][R]]. All analysis, spatial as well as
+non-spatial, is done in [[http://cran.r-project.org/][R]]. A possible workflow can look as followed:
+
+#+NAME: GRASS_backend
+#+begin_src plantuml :file-ext png :results graphic
+@startuml
+skin BlueModern
+
+activate R
+R -> R: initialisation
+
+R <- GRASS: read spatial raster data 
+R <- GRASS: read spatial vector data
+
+R -> R: do spatial calculations
+
+R -> GRASS: write spatial raster data
+R -> GRASS: write spatial vector data
+
+R -> R: do non-spatial calculations
+
+
+[<- R: write spatial raster data
+[<- R: write spatial vector data
+[<- R: write non-spatial data
+@enduml
+#+end_src
+
+#+RESULTS: GRASS_backend
+[[file:GRASS_backend.png]]
+
+[[./GRASS_backend.png]]
+
+
+* R as scripting language for GRASS
+The second approach of using  [[http://grass.osgeo.org/][GRASS GIS]] from [[http://cran.r-project.org/][R]] is to use R as a scripting language in a similar way as bash and python can do.
+A possible workflow can look as followed:
+
+#+NAME: R_script
+#+begin_src plantuml :file-ext png :results graphic
+@startuml
+skin BlueModern
+
+activate R
+R -> R: initialisation
+
+R -> GRASS: request calculations
+deactivate R
+activate GRASS
+GRASS -> GRASS: do spatial calculations
+GRASS -> GRASS: do non-spatial calculations
+R <- GRASS: done
+deactivate GRASS
+activate R
+
+R <- GRASS: read spatial data
+R -> R: do non-spatial calculations
+
+R <- GRASS: read non-spatial data
+R -> R: do non-spatial calculations
+[<- R: write spatial data
+[<- R: write non-spatial data
+deactivate R
+@enduml
+#+end_src
+
+#+RESULTS: R_script
+[[file:R_script.png]]
+
+[[./R_script.png]]
+
+
 
 * TODOs
-** TODO Add GRASS -> R non spatial data
+** DONE Add GRASS -> R non spatial data
 LOGGED: <2015-02-10 Tue 18:06> 
 - link     :: [[file:~/Documents/Projects/R-GRASS-WIKI/README.org::*R-GRASS%20workflow%20chart][R-GRASS workflow chart]] 
 - author   :: Rainer M Krug, email: Rainer@krugs.de
