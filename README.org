@@ -12,7 +12,7 @@
 #+SELECT_TAGS: export
 #+EXCLUDE_TAGS: noexport
 #+CREATOR: Emacs 24.4.1 (Org mode 8.3beta)
-#
+
 
 * R-GRASS workflow chart
 This chart illustrates the workflow between [[http://cran.r-project.org/][R]] and [[http://grass.osgeo.org/][GRASS]]
@@ -54,3 +54,5 @@ deactivate R
 
 #+RESULTS: R_GRASS
 [[file:R_GRASS.png]]
+
+[[./R_GRASS.png]]
