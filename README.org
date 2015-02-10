@@ -62,7 +62,6 @@ R -> GRASS: initialisation
 R -> GRASS: do some stuff
 GRASS -> R: do more stuff
 
-deactivate R
 @enduml
 #+end_src
 
