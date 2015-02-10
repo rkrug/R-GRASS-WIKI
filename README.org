@@ -1,0 +1,56 @@
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+#+OPTIONS: e:t email:nil f:t inline:t num:t p:nil pri:nil prop:nil
+#+OPTIONS: stat:t tags:t tasks:t tex:t timestamp:t toc:t todo:t |:t
+#+TITLE: R-GRASS wiki stuff
+#+DATE: <2015-02-10 Tue>
+#+AUTHOR: Rainer M. Krug
+#+EMAIL: Rainer@krugs.de
+#+DESCRIPTION: Conraining =figures et al for the R-GRASS wiki
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 24.4.1 (Org mode 8.3beta)
+#
+
+* R-GRASS workflow chart
+This chart illustrates the workflow between [[http://cran.r-project.org/][R]] and [[http://grass.osgeo.org/][GRASS]]
+
+#+NAME: R_GRASS
+#+begin_src plantuml :file-ext png :results graphic
+@startuml
+skin BlueModern
+
+activate R
+' R -> R: initialisation
+'' group GRASS as DB
+  R <- GRASS: read spatial data
+  R -> R: do calculations
+  R -> GRASS: write spatial data
+  [<- R: write non-spatial data
+'end
+
+'group R as script
+  R -> GRASS: request calculations
+  deactivate R
+  activate GRASS
+  GRASS -> GRASS: do calculations
+  R <- GRASS: done
+  deactivate GRASS
+  activate R
+'end
+
+'group GRASS as DB
+  R <- GRASS: read spatial data
+  R -> R: do calculations
+'  R -> GRASS: write spatial data
+  [<- R: write non-spatial data
+'end
+deactivate R
+@enduml
+
+#+end_src
+
+#+RESULTS: R_GRASS
+[[file:R_GRASS.png]]
