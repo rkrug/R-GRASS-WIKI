@@ -24,7 +24,7 @@ A possible workflow can look as followed:
 #+NAME: R_in_GRASS
 #+begin_src plantuml :file-ext png :results graphic
 @startuml
-skin BlueModern
+'  skin BlueModern
 
 activate GRASS
 
@@ -36,7 +36,8 @@ R -> GRASS: do some stuff
 GRASS -> R: do more stuff
 
 R -> GRASS: end R and return
-deactivate R
+destroy R
+' deactivate R
 @enduml
 #+end_src
 
@@ -53,7 +54,7 @@ GIS]] session.
 #+NAME: GRASS_in_R
 #+begin_src plantuml :file-ext png :results graphic
 @startuml
-skin BlueModern
+'  skin BlueModern
 
 activate R
 create GRASS
@@ -72,26 +73,31 @@ GRASS -> R: do more stuff
 
 
 * R-GRASS interaction illustrations
-This chart illustrates the possible interactions between  [[http://cran.r-project.org/][R]] and [[http://grass.osgeo.org/][GRASS]].
-These interactions are independent of the way in which the co-operation was initiated.
+This chart illustrates the possible interactions between [[http://cran.r-project.org/][R]] and [[http://grass.osgeo.org/][GRASS]].
+These interactions are independent of the way in which the
+co-operation was initiated.
 
 #+NAME: R_GRASS_interactions
 #+begin_src plantuml :file-ext png :results graphic
 @startuml
-skin BlueModern
+'  skin BlueModern
 
 activate R
-create GRASS
-R -> GRASS: initialisation
+'  create GRASS
+'  == Initialisation ==
+'  R -> GRASS: initialisation
 
+== From GRASS to R ==
 R <- GRASS: read spatial raster data
 R <- GRASS: read spatial vector data
 R <- GRASS: read non-spatial data
 
+== Calculations in R ==
 R -> R: do spatial raster calculations
 R -> R: do spatial vector calculations
 R -> R: do non-spatial calculations
 
+== Calculations in GRASS ==
 R -> GRASS: request calculation
 deactivate R
 activate GRASS
@@ -101,6 +107,7 @@ R <- GRASS: done
 deactivate GRASS
 activate R
 
+== From R to GRASS ==
 R -> GRASS: write spatial raster data
 R -> GRASS: write spatial vector data
 
@@ -126,10 +133,12 @@ non-spatial, is done in [[http://cran.r-project.org/][R]]. A possible workflow c
 #+NAME: GRASS_backend
 #+begin_src plantuml :file-ext png :results graphic
 @startuml
-skin BlueModern
+' '  skin BlueModern
+actor R
+database GRASS
 
 activate R
-create GRASS
+' create GRASS
 R -> GRASS: initialisation
 
 R <- GRASS: read spatial raster data 
@@ -162,7 +171,7 @@ A possible workflow can look as followed:
 #+NAME: R_script
 #+begin_src plantuml :file-ext png :results graphic
 @startuml
-skin BlueModern
+'  skin BlueModern
 
 activate R
 create GRASS
